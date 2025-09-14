@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdullah Swailem - Cybersécurité</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-title {
+            color: #64b5f6;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(100, 181, 246, 0.2);
+            color: #64b5f6;
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #64b5f6, #42a5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(45deg, #64b5f6, #42a5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-category h3 {
+            color: #64b5f6;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-list {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-title {
+            color: #64b5f6;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            color: #81c784;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .education-item, .cert-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .education-title, .cert-title {
+            color: #64b5f6;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-school, .education-period {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-icon {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: #64b5f6;
+        }
+
+        .languages {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .language-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 150px;
+        }
+
+        .language-name {
+            color: #64b5f6;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .interest-category {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .interest-title {
+            color: #64b5f6;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .interest-list {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .menu-toggle {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                border: none;
+                padding: 0.5rem;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element" style="width: 100px; height: 100px; top: 10%; left: 80%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="width: 150px; height: 150px; top: 60%; left: 85%; animation-delay: 2s;"></div>
+        <div class="floating-element" style="width: 80px; height: 80px; top: 80%; left: 10%; animation-delay: 4s;"></div>
+    </div>
+
+    <button class="menu-toggle" onclick="toggleSidebar()" style="display: none;">☰</button>
+
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div class="profile-section">
+                <div class="profile-img">AS</div>
+                <div class="profile-name">Abdullah Swailem</div>
+                <div class="profile-title">Étudiant en Cybersécurité</div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="showSection('home')">
+                        <span class="nav-icon">🏠</span>
+                        ACCUEIL
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('about')">
+                        <span class="nav-icon">👤</span>
+                        À PROPOS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('skills')">
+                        <span class="nav-icon">⚡</span>
+                        COMPÉTENCES
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('projects')">
+                        <span class="nav-icon">💼</span>
+                        PROJETS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('education')">
+                        <span class="nav-icon">🎓</span>
+                        FORMATION
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('certificates')">
+                        <span class="nav-icon">🏆</span>
+                        CERTIFICATS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('interests')">
+                        <span class="nav-icon">🎯</span>
+                        CENTRES D'INTÉRÊT
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('contact')">
+                        <span class="nav-icon">📞</span>
+                        CONTACT
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- HOME SECTION -->
+            <section id="home" class="section active">
+                <div class="hero-section">
+                    <h1 class="hero-title">Abdullah Swailem</h1>
+                    <h2 class="hero-subtitle">Étudiant en Master Cybersécurité</h2>
+                    <p class="hero-description">
+                        Passionné par la sécurité informatique, de la recherche de vulnérabilités aux tests d'intrusion, 
+                        en passant par l'analyse de risques et la remédiation. Actuellement à la recherche d'un stage de 2 mois.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ABOUT SECTION -->
+            <section id="about" class="section">
+                <h2 class="section-title">À Propos</h2>
+                <div class="education-item">
+                    <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-size: 1.1rem;">
+                        Étudiant en première année de master en cybersécurité à l'Université Rennes-CyberSchool, 
+                        je suis passionné par tous les aspects de la sécurité informatique. Mon parcours m'a mené 
+                        de l'obtention d'une licence en informatique à Toulon vers une spécialisation en cybersécurité.
+                    </p>
+                    <br>
+                    <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-size: 1.1rem;">
+                        Mon expertise couvre la sécurité offensive, le pentesting, l'analyse de vulnérabilités, 
+                        et la remédiation. J'ai développé mes compétences à travers de nombreux projets pratiques 
+                        et des compétitions CTF où j'ai notamment remporté la première place au CTF Flag'Malo.
+                    </p>
+                </div>
+
+                <div class="languages">
+                    <div class="language-item">
+                        <div class="language-name">Arabe</div>
+                        <div>Langue maternelle</div>
+                    </div>
+                    <div class="language-item">
+                        <div class="language-name">Français</div>
+                        <div>Courant</div>
+                    </div>
+                    <div class="language-item">
+                        <div class="language-name">Anglais</div>
+                        <div>Courant</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SKILLS SECTION -->
+            <section id="skills" class="section">
+                <h2 class="section-title">Compétences</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Langages de Programmation</h3>
+                        <div class="skill-list">
+                            Python, C, C++, Bash, Shell, ARM/Assembly, PowerShell, Yacc, Lex, MySQL, PostgreSQL, LaTeX
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Sécurité Offensive & Pentesting</h3>
+                        <div class="skill-list">
+                            Metasploit, Nmap, Burp Suite, CrackMapExec, Mimikatz, Impacket, Techniques d'injection, Crackage de mots de passe
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Réseaux</h3>
+                        <div class="skill-list">
+                            Modèle OSI-TCP/IP, Subnetting, Routage, Pare-feux, Protocoles (TCP/IP, UDP, HTTP), Services (DNS, DHCP), Communication client/serveur
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Systèmes & Sécurité</h3>
+                        <div class="skill-list">
+                            Chiffrement (Hill, RSA, DES), Gestion de processus, Détection et prévention d'intrusions (DoS), Modèle DAC, Authentification forte avec FIDO
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Soft Skills</h3>
+                        <div class="skill-list">
+                            Curiosité, Autonomie, Écoute empathique, Travail en équipe, Communication
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECTS SECTION -->
+            <section id="projects" class="section">
+                <h2 class="section-title">Projets</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 class="project-title">Organisation et Création de Challenges CTF</h3>
+                        <p class="project-description">
+                            Organisé un événement CTF pour renforcer les compétences en pentesting, reverse engineering et sécurité informatique.
+                        </p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-title">Rétro-ingénierie d'un verrou électronique STM32</h3>
+                        <p class="project-description">
+                            Analysé les échanges I²C, SPI et UART à l'aide d'un analyseur logique et du Bus Pirate. 
+                            Développé une méthode de spoofing de la clé, validant une solution technique au problème.
+                        </p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-title">Chargement Dynamique de Bibliothèques ELF</h3>
+                        <p class="project-description">
+                            Créé un loader personnalisé pour charger dynamiquement des bibliothèques ELF. 
+                            Approfondi les mécanismes de chargement dynamique, d'analyse binaire et de gestion mémoire.
+                        </p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-title">Système d'exploitation Nachos</h3>
+                        <p class="project-description">
+                            Implémenté un noyau minimaliste basé sur Nachos pour comprendre l'architecture interne des systèmes d'exploitation. 
+                            Géré les threads, la synchronisation concurrente et la mémoire virtuelle avec pagination à la demande.
+                        </p>
+                        <p class="project-tech">Technologies : C++, GDB, environnement Unix, machine émulée RISC-V</p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-title">Compilateur Algo - RAM</h3>
+                        <p class="project-description">
+                            Conçu un compilateur pour un langage algorithmique, traduisant les programmes en instructions pour machine RAM.
+                        </p>
+                        <p class="project-tech">Technologies : C, Lex, Yacc, Tex, Shell</p>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-title">Base de Données Grand Theft Auto (GTA)</h3>
+                        <p class="project-description">
+                            Créé une base de données thématique autour de GTA en utilisant MySQL et PostgreSQL pour modéliser et interroger les données.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EDUCATION SECTION -->
+            <section id="education" class="section">
+                <h2 class="section-title">Formation</h2>
+                <div class="education-item">
+                    <h3 class="education-title">Master 1 en Cybersécurité</h3>
+                    <p class="education-school">Université Rennes-CyberSchool, Rennes - France</p>
+                    <p class="education-period">En cours</p>
+                </div>
+                
+                <div class="education-item">
+                    <h3 class="education-title">Licence Informatique (Mention : Assez Bien)</h3>
+                    <p class="education-school">Faculté des sciences, Université de Toulon, Toulon - France</p>
+                    <p class="education-period">Septembre 2021 - 2024</p>
+                </div>
+            </section>
+
+            <!-- CERTIFICATES SECTION -->
+            <section id="certificates" class="section">
+                <h2 class="section-title">Certificats</h2>
+                <div class="cert-item">
+                    <h3 class="cert-title">Certification Pix</h3>
+                </div>
+                
+                <div class="cert-item">
+                    <h3 class="cert-title">Sensibilisation à la cybersécurité</h3>
+                </div>
+                
+                <div class="cert-item">
+                    <h3 class="cert-title">Formation labellisée CyberEdu par l'ANSSI</h3>
+                    <p style="color: rgba(255, 255, 255, 0.8);">Agence Nationale de la Sécurité des Systèmes d'Information</p>
+                </div>
+            </section>
+
+            <!-- INTERESTS SECTION -->
+            <section id="interests" class="section">
+                <h2 class="section-title">Centres d'Intérêt</h2>
+                <div class="interests-grid">
+                    <div class="interest-category">
+                        <h3 class="interest-title">Compétitions CTF</h3>
+                        <div class="interest-list">
+                            • Challenges sur RootMe, HTB et picoCTF<br>
+                            • Victoire (1ère place) au CTF Flag'Malo<br>
+                            • Qualification au premier tour du CTF Hackday<br>
+                            • CTF THCON Toulouse
+                        </div>
+                    </div>
+                    
+                    <div class="interest-category">
+                        <h3 class="interest-title">Activités Sportives</h3>
+                        <div class="interest-list">
+                            • Volleyball<br>
+                            • Natation<br>
+                            • E-football
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTACT SECTION -->
+            <section id="contact" class="section">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        +33 6 68 43 84 81
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        absw1999@gmail.com
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">💼</span>
+                        abdullah swailem (LinkedIn)
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        France
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Show menu toggle on mobile
+        function handleResize() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (window.innerWidth <= 768) {
+                menuToggle.style.display = 'block';
+            } else {
+                menuToggle.style.display = 'none';
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Check on load
+
+        // Add click event listeners to nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('onclick').match(/'(.+)'/)[1];
+                showSection(sectionId);
+                
+                // Update active state
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
